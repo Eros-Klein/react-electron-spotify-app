@@ -20,9 +20,9 @@ function createWindow() {
 
     mainWindow.on('closed', () => (mainWindow = null));
 
-    mainWindow.menuBarVisible = false;
+    mainWindow.setIcon(path.join(__dirname, 'public', 'icon.png'));
 
-    mainWindow.webContents.openDevTools();
+    mainWindow.menuBarVisible = false;
 }
 
 app.on('ready', createWindow);
