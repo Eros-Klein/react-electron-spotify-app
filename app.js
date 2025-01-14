@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const { ipcMain } = require('electron');
+const { startServer, stopServer } = require('./server/server.js');
 let mainWindow;
 
 function createWindow() {
@@ -23,9 +24,14 @@ function createWindow() {
     mainWindow.setIcon(path.join(__dirname, 'public', 'icon.png'));
 
     mainWindow.menuBarVisible = false;
+
+    mainWindow.webContents.openDevTools();
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+    createWindow();
+    startServer();
+});
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -52,5 +58,6 @@ ipcMain.on('maximize', () => {
 });
 
 ipcMain.on('close', () => {
+    stopServer();
     mainWindow.close();
 });
