@@ -31,7 +31,7 @@ export default function Auth() {
   }, []);
 
   return (
-    <div className="flex flex-col w-screen h-screen justify-evenly items-center overflow-hidden">
+    <div className="main flex flex-col w-screen h-screen justify-evenly items-center overflow-hidden">
         <div id="cursor-tracer" style={{top: position.y, left: position.x}} className="absolute w-24 h-24 top-0 left-0 bg-accent pointer-events-none rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 -z-10">
         </div>
         <h1 className="text-4xl font-bold tracking-wider">Welcome to Spoitify!</h1>

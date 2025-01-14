@@ -1,6 +1,7 @@
 const express = require('express');
 const crypto = require('crypto');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 let server;
@@ -46,7 +47,7 @@ module.exports = { startServer, stopServer };
 
 async function requestAccessToken(code) {
   const url = "https://accounts.spotify.com/api/token";
-  const clientId = 'client-id';
+  const clientId = process.env.CLIENT_ID;
   const redirectUri = 'http://localhost:3172/redirect';
 
   const payload = {
@@ -72,7 +73,7 @@ async function requestAccessToken(code) {
 }
 
 function requestUserAuthorization() {
-  const clientId = 'client-id';
+  const clientId = process.env.CLIENT_ID;
   const redirectUri = 'http://localhost:3172/redirect';
 
   const scope = 'user-library-read';
