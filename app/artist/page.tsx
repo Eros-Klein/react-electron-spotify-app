@@ -83,7 +83,7 @@ export default function ArtistPage() {
                                     <div key={track.id} className="flex flex-row gap-3 hover:bg-white hover:bg-opacity-25 cursor-pointer select-none rounded-lg">
                                         <img src={track.album.images[0].url} width={50} height={50} alt={track.name} className="rounded-lg shadow-sm shadow-secondary" />
                                         <div className="flex flex-col gap-1 py-1">
-                                            <p className="text-sm font-medium">{track.name}</p>
+                                            <p className="text-sm font-medium">{track.name.length > 30? track.name.substring(0, 25) + "...": track.name}</p>
                                             <p className="text-xs opacity-50">{track.album.name} • {track.album.release_date.substring(0,4)}</p>
                                         </div>
                                     </div>

@@ -25,7 +25,7 @@ function createWindow() {
 
     mainWindow.menuBarVisible = false;
 
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 }
 
 app.on('ready', () => {
