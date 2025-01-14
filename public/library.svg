@@ -1,0 +1,24 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="200"
+    height="200"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+>
+    <!-- Square sleeve -->
+    <rect x="2" y="2" width="20" height="20" stroke="#4c019d" fill="none" />
+
+    <!-- Circle (vinyl peeking out) -->
+    <circle cx="12" cy="12" r="6" stroke="#4c019d" fill="none" />
+
+    <!-- Music note -->
+    <path
+        d="M14 7v6.5a2 2 0 1 1-1-1.73V5.5l5-1v6.5a2 2 0 1 1-1-1.73V6"
+        fill="none"
+        stroke="#4c019d"
+    />
+</svg>

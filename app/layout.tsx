@@ -31,7 +31,7 @@ export default function RootLayout({
         <div className="layout-grid">
           <WindowControls />
           <NaviagtionBar />
-            {children}
+          {children}
         </div>
       </body>
     </html>

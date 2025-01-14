@@ -24,7 +24,22 @@ async function getAccessToken(): Promise<string> {
 
     const data = await response.json();
 
-    console.log(data);
+    return data;
+}
+
+export async function refreshToken() {
+    const response = await fetch("http://localhost:3172/refresh", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    console.log("refreshing token");
+
+    console.log(response);
+
+    const data = await response.json();
 
     return data;
 }

@@ -6,12 +6,28 @@ require('dotenv').config();
 const app = express();
 let server;
 let token;
+let refreshToken;
 
 function startServer() {
+  try{
+    refreshToken = readRefreshToken();
+  }
+  catch(err){
+    console.log(err.message);
+    console.log("No refresh token found");
+  }
     app.use(cors());
 
     app.get('/', (req, res) => {
       res.send('Hello World');
+    });
+
+    app.get('/refresh', async (req, res) => {
+      token = await refreshAccessToken();
+
+      console.log("refreshed:", token);
+
+      res.send(JSON.stringify(token));
     });
 
     app.get('/login', (req, res) => {
@@ -45,6 +61,50 @@ module.exports = { startServer, stopServer };
 
 // Logic for the OAuth2.0 Authorization Code Flow with PKCE
 
+async function writeRefreshToken() {
+  const fs = require('fs/promises');
+  const path = require('path');
+  const filePath = path.join(__dirname, 'refresh_token.txt');
+  await fs.writeFile(filePath, refreshToken);
+}
+
+async function readRefreshToken() {
+  const fs = require('fs/promises');
+  const path = require('path');
+  const filePath = path.join(__dirname, 'refresh_token.txt');
+  refreshToken = await fs.readFile(filePath, {encoding: 'utf-8'});
+}
+
+async function refreshAccessToken() {
+  const url = "https://accounts.spotify.com/api/token";
+  const clientId = process.env.CLIENT_ID;
+
+  const payload = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: clientId
+    }),
+  };
+
+  const body = await fetch(url, payload);
+
+  const response = await body.json();
+
+  console.log(response);
+
+  console.log("refreshing");
+
+  refreshToken = response.refresh_token;
+  writeRefreshToken();
+
+  return response.access_token;
+}
+
 async function requestAccessToken(code) {
   const url = "https://accounts.spotify.com/api/token";
   const clientId = process.env.CLIENT_ID;
@@ -68,6 +128,9 @@ async function requestAccessToken(code) {
   const response = await body.json();
 
   console.log(response);
+
+  refreshToken = response.refresh_token;
+  writeRefreshToken();
 
   return response.access_token;
 }
